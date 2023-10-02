@@ -50,9 +50,19 @@ function Cell(row, column) {
 };
 
 function GameController(
-   playerOne = 'Player 1',
-   playerTwo = 'Player 2'
+   playerOneName = 'Player 1',
+   playerTwoName = 'Player 2'
 ) {
+   const players = [
+      playerOne = {
+         name: playerOneName,
+         token: 'O',
+      },
+      playerTwo = {
+         name: playerTwoName,
+         token: 'X',
+      },
+   ];
    const gameboard = Gameboard();
    const board = gameboard.getBoard();
 
