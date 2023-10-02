@@ -14,8 +14,18 @@ function Gameboard() {
    
    const getBoard = () => board;
 
+   const printBoard = () => {
+      const printableBoard = board.map(
+         (row) => row.map(
+            (cell) => cell.getVal()
+         )
+      );
+      console.table(printableBoard);
+   };
+
    return {
       getBoard,
+      printBoard,
    };
 };
 
