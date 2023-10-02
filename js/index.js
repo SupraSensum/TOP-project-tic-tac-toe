@@ -43,9 +43,16 @@ function GameController(
    playerTwo = 'Player 2'
 ) {
    const gameboard = Gameboard();
-   const board = Gameboard.getBoard();
+   const board = gameboard.getBoard();
 
    const playRound = (row, column) => {
-      // const targetedCell = 
+      const targetedCell = board[row][column];
+      console.log(targetedCell.getAddress(), targetedCell.getVal());
+   };
+
+   return {
+      playRound,
    };
 };
+
+const game = GameController();
