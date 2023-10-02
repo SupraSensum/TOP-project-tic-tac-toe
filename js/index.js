@@ -6,12 +6,14 @@ function Gameboard() {
    const rows = 3;
    const columns = 3;
    
-   for (let i = 0; i < rows; i++) {
-      board[i] = [];
-      for (let j = 0; j < columns; j++) {
-         board[i][j] = Cell(i, j);
+   const createBoard = (() => { // opted for IIFE for self-documentation
+      for (let i = 0; i < rows; i++) {
+         board[i] = [];
+         for (let j = 0; j < columns; j++) {
+            board[i][j] = Cell(i, j);
+         }
       }
-   }
+   })();
    
    const getBoard = () => board;
 
@@ -23,7 +25,7 @@ function Gameboard() {
 function Cell(row, column) {
    const address = {
       row,
-      column,  
+      column,
    };
    let value = 0;
 
@@ -40,5 +42,10 @@ function GameController(
    playerOne = 'Player 1',
    playerTwo = 'Player 2'
 ) {
-   
+   const gameboard = Gameboard();
+   const board = Gameboard.getBoard();
+
+   const playRound = (row, column) => {
+      // const targetedCell = 
+   };
 };
