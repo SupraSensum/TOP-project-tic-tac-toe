@@ -84,7 +84,7 @@ function GameController(
          gameboard.printBoard();
          toggleCurrentPlayer();
       } else {
-         console.warn('Cell is already occupied');
+         console.warn('Cell is already occupied'); // this effectively serves as collision management, preventing overwriting previous moves
       }
    };
 
