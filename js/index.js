@@ -60,6 +60,8 @@ function GameController(
       const targetedCell = board[row][column];
 
       targetedCell.updateVal(playerToken);
+
+      gameboard.printBoard();
    };
 
    return {
