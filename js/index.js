@@ -1,6 +1,3 @@
-// FACTORIES
-
-// MODULES
 function Gameboard() {
    const board = []; // shall be 2D
    const rows = 3;
