@@ -13,6 +13,7 @@ CONSOLE
    > token
 > gameControls
    > playRound
+   > checkIfWinner
 
 LATER
 > displayControls
