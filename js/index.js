@@ -56,22 +56,36 @@ function GameController(
    const players = [
       playerOne = {
          name: playerOneName,
-         token: 'O',
+         token: 'X',
       },
       playerTwo = {
          name: playerTwoName,
-         token: 'X',
+         token: 'O',
       },
    ];
    const gameboard = Gameboard();
    const board = gameboard.getBoard();
+   let currentPlayer = 0;
 
-   const playRound = (playerToken, row, column) => {
+   const toggleCurrentPlayer = () => {
+      currentPlayer = 1 - currentPlayer;
+      console.log(`${getCurrentPlayerName()} [${getCurrentPlayerToken()}], you're up!`);
+
+   };
+
+   const getCurrentPlayerToken = () => players[currentPlayer].token;
+   const getCurrentPlayerName = () => players[currentPlayer].name;
+
+   const playRound = (row, column) => {
       const targetedCell = board[row][column];
-
-      targetedCell.updateVal(playerToken);
-
-      gameboard.printBoard();
+      
+      if (targetedCell.getVal() === 0) { // only do voodoo if cell is "empty"
+         targetedCell.updateVal(getCurrentPlayerToken());
+         gameboard.printBoard();
+         toggleCurrentPlayer();
+      } else {
+         console.warn('Cell is already occupied');
+      }
    };
 
    return {
