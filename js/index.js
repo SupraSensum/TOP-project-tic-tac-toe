@@ -31,10 +31,14 @@ function Cell(row, column) {
 
    const getAddress = () => address;
    const getVal = () => value;
+   const updateVal = (newVal) => {
+      value = newVal;
+   }
 
    return {
       getAddress,
       getVal,
+      updateVal,
    };
 };
 
@@ -45,9 +49,10 @@ function GameController(
    const gameboard = Gameboard();
    const board = gameboard.getBoard();
 
-   const playRound = (row, column) => {
+   const playRound = (playerToken, row, column) => {
       const targetedCell = board[row][column];
-      console.log(targetedCell.getAddress(), targetedCell.getVal());
+
+      targetedCell.updateVal(playerToken);
    };
 
    return {
