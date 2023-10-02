@@ -6,12 +6,12 @@ what are the main 'interfaces', so to speak?
 
 CONSOLE
 > gameboard
+   > printBoard (to console)
 > cells
 > player info
    > name
    > token
 > gameControls
-   > printBoard (to console)
    > playRound
 
 LATER
