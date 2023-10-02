@@ -18,7 +18,7 @@ function Gameboard() {
    return {
       getBoard,
    };
-}
+};
 
 function Cell(row, column) {
    const address = {
@@ -34,4 +34,11 @@ function Cell(row, column) {
       getAddress,
       getVal,
    };
+};
+
+function GameController(
+   playerOne = 'Player 1',
+   playerTwo = 'Player 2'
+) {
+   
 };
