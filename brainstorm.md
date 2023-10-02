@@ -8,7 +8,11 @@ CONSOLE
 > gameboard
 > cells
 > player info
+   > name
+   > token
 > gameControls
+   > printBoard (to console)
+   > playRound
 
 LATER
 > displayControls
