@@ -66,29 +66,83 @@ function GameController(
    const gameboard = Gameboard();
    const board = gameboard.getBoard();
    let currentPlayer = 0;
+   
+   const getCurrentPlayerToken = () => players[currentPlayer].token;
+   const getCurrentPlayerName = () => players[currentPlayer].name;
 
    const toggleCurrentPlayer = () => {
       currentPlayer = 1 - currentPlayer;
       console.log(`${getCurrentPlayerName()} [${getCurrentPlayerToken()}], you're up!`);
    };
+   
+   const weGotAWinnerrr = () => {
+      console.log(`${getCurrentPlayerName()} is a motha fuckin' winnaaaaaaaaaaaaa`);
+   }
+   
+   const checkIfWin = (row, column) => {
+      let counter = 0;
+      currentPlayerToken = getCurrentPlayerToken();
 
-   const makeMove = (cell) => {
-      if (cell.getVal() === 0) { // only do voodoo if cell is "empty"
-         cell.updateVal(getCurrentPlayerToken());
+      // Check backslash-shaped diagonal
+      for (let i = 0; i < 3; i++) {
+         if (board[i][i].getVal() === currentPlayerToken) {
+            counter++;
+         }
+      }
+      if (counter >= 3) {
+         weGotAWinnerrr();
+         return;
+      }
+      counter = 0;
+
+      // Check forwardslash-shaped diagonal
+      for (let i = 0; i < 3; i++) {
+         if (board[i][2 - i].getVal() === currentPlayerToken) {
+            counter++;
+         }
+      }
+      if (counter >= 3) {
+         weGotAWinnerrr();
+         return;
+      }
+      counter = 0;
+
+      // Check horizontal
+      for (let i = 0; i < 3; i++) {
+         if (board[row][i].getVal() === currentPlayerToken) {
+            counter++;
+         }
+         console.log({row, i, currentPlayerToken}, board[row][i].getVal(), board[row][i].getVal() === currentPlayerToken);
+      }
+      if (counter >= 3) {
+         weGotAWinnerrr();
+         return;
+      }
+      counter = 0;
+
+      // Check vertical
+      for (let i = 0; i < 3; i++) {
+         if (board[i][column].getVal() === currentPlayerToken) {
+            counter++;
+         }
+      }
+      if (counter >= 3) {
+         weGotAWinnerrr();
+         return;
+      }
+   }
+   
+   const playRound = (row, column) => {
+      const targetedCell = board[row][column];
+      
+      if (targetedCell.getVal() === 0) { // only do voodoo if cell is "empty"
+         targetedCell.updateVal(getCurrentPlayerToken());
          gameboard.printBoard();
+         checkIfWin(row, column); // params are so we have access to the last move
          toggleCurrentPlayer();
       } else {
          console.warn('Cell is already occupied'); // this effectively serves as collision management, preventing overwriting previous moves
       }
-   }
-
-   const getCurrentPlayerToken = () => players[currentPlayer].token;
-   const getCurrentPlayerName = () => players[currentPlayer].name;
-
-   const playRound = (row, column) => {
-      const targetedCell = board[row][column];
-      
-      makeMove(targetedCell);
    };
 
    return {
