@@ -70,8 +70,17 @@ function GameController(
    const toggleCurrentPlayer = () => {
       currentPlayer = 1 - currentPlayer;
       console.log(`${getCurrentPlayerName()} [${getCurrentPlayerToken()}], you're up!`);
-
    };
+
+   const makeMove = (cell) => {
+      if (cell.getVal() === 0) { // only do voodoo if cell is "empty"
+         cell.updateVal(getCurrentPlayerToken());
+         gameboard.printBoard();
+         toggleCurrentPlayer();
+      } else {
+         console.warn('Cell is already occupied'); // this effectively serves as collision management, preventing overwriting previous moves
+      }
+   }
 
    const getCurrentPlayerToken = () => players[currentPlayer].token;
    const getCurrentPlayerName = () => players[currentPlayer].name;
@@ -79,13 +88,7 @@ function GameController(
    const playRound = (row, column) => {
       const targetedCell = board[row][column];
       
-      if (targetedCell.getVal() === 0) { // only do voodoo if cell is "empty"
-         targetedCell.updateVal(getCurrentPlayerToken());
-         gameboard.printBoard();
-         toggleCurrentPlayer();
-      } else {
-         console.warn('Cell is already occupied'); // this effectively serves as collision management, preventing overwriting previous moves
-      }
+      makeMove(targetedCell);
    };
 
    return {
