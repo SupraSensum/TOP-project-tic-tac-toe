@@ -77,60 +77,35 @@ function GameController(
    
    const weGotAWinnerrr = () => {
       console.log(`${getCurrentPlayerName()} is a motha fuckin' winnaaaaaaaaaaaaa`);
-   }
+   };
    
    const checkIfWin = (row, column) => {
-      let counter = 0;
-      currentPlayerToken = getCurrentPlayerToken();
+      const currentPlayerToken = getCurrentPlayerToken();
 
-      // Check backslash-shaped diagonal
-      for (let i = 0; i < 3; i++) {
-         if (board[i][i].getVal() === currentPlayerToken) {
-            counter++;
+      const directions = [
+         [[0, 0], [0, 1], [0, 2]], // First row
+         [[1, 0], [1, 1], [1, 2]], // Second row
+         [[2, 0], [2, 1], [2, 2]], // Third row
+         [[0, 0], [1, 0], [2, 0]], // First column
+         [[0, 1], [1, 1], [2, 1]], // Second column
+         [[0, 2], [1, 2], [2, 2]], // Third column
+         [[0, 0], [1, 1], [2, 2]], // Diagonal from top-left to bottom-right
+         [[0, 2], [1, 1], [2, 0]]  // Diagonal from top-right to bottom-left
+      ];
+
+      for (const direction of directions) {
+         let counter = 0;
+         for (const [r, c] of direction) {
+            if (board[r][c].getVal() === currentPlayerToken) {
+               counter++;
+            }
+         }
+         if (counter >= 3) {
+            weGotAWinnerrr();
+            return;
          }
       }
-      if (counter >= 3) {
-         weGotAWinnerrr();
-         return;
-      }
-      counter = 0;
-
-      // Check forwardslash-shaped diagonal
-      for (let i = 0; i < 3; i++) {
-         if (board[i][2 - i].getVal() === currentPlayerToken) {
-            counter++;
-         }
-      }
-      if (counter >= 3) {
-         weGotAWinnerrr();
-         return;
-      }
-      counter = 0;
-
-      // Check horizontal
-      for (let i = 0; i < 3; i++) {
-         if (board[row][i].getVal() === currentPlayerToken) {
-            counter++;
-         }
-         console.log({row, i, currentPlayerToken}, board[row][i].getVal(), board[row][i].getVal() === currentPlayerToken);
-      }
-      if (counter >= 3) {
-         weGotAWinnerrr();
-         return;
-      }
-      counter = 0;
-
-      // Check vertical
-      for (let i = 0; i < 3; i++) {
-         if (board[i][column].getVal() === currentPlayerToken) {
-            counter++;
-         }
-      }
-      if (counter >= 3) {
-         weGotAWinnerrr();
-         return;
-      }
-   }
+   };
    
    const playRound = (row, column) => {
       const targetedCell = board[row][column];
