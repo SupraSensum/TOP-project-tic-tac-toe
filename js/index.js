@@ -79,7 +79,7 @@ function GameController(
       console.log(`${getCurrentPlayerName()} is a motha fuckin' winnaaaaaaaaaaaaa`);
    };
    
-   const checkIfWin = (row, column) => {
+   const isWinningMove = (row, column) => {
       const currentPlayerToken = getCurrentPlayerToken();
 
       const directions = [
@@ -102,9 +102,11 @@ function GameController(
          }
          if (counter >= 3) {
             weGotAWinnerrr();
-            return;
+            return true;
          }
       }
+
+      return false
    };
    
    const playRound = (row, column) => {
@@ -113,8 +115,11 @@ function GameController(
       if (targetedCell.getVal() === 0) { // only do voodoo if cell is "empty"
          targetedCell.updateVal(getCurrentPlayerToken());
          gameboard.printBoard();
-         checkIfWin(row, column); // params are so we have access to the last move
-         toggleCurrentPlayer();
+         if (isWinningMove(row, column)) {
+            // TBD
+         } else {
+            toggleCurrentPlayer();
+         }
       } else {
          console.warn('Cell is already occupied'); // this effectively serves as collision management, preventing overwriting previous moves
       }
