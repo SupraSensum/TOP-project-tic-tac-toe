@@ -117,6 +117,7 @@ function GameController(
          gameboard.printBoard();
          if (isWinningMove(row, column)) {
             // TBD
+            // Freeze controls?
          } else {
             toggleCurrentPlayer();
          }

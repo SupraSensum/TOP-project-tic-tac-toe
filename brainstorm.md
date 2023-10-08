@@ -17,3 +17,4 @@ X   > checkIfWinner
 
 LATER
 > displayControls
+    > Controls need to freeze once a win is detected
