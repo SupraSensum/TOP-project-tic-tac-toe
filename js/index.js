@@ -131,4 +131,8 @@ function GameController(
    };
 };
 
+function displayController() {
+   
+}
+
 const game = GameController();
