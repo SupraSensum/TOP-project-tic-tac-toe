@@ -49,31 +49,45 @@ function Cell(row, column) {
    };
 };
 
-function GameController(
-   playerOneName = 'Player 1',
-   playerTwoName = 'Player 2'
-) {
-   const players = [
-      playerOne = {
-         name: playerOneName,
-         token: 'X',
-      },
-      playerTwo = {
-         name: playerTwoName,
-         token: 'O',
-      },
-   ];
-   const gameboard = Gameboard();
-   const board = gameboard.getBoard();
-   let currentPlayer = 0;
+function GameController() {
+   let players;
+   let gameboard;
+   let board;
+   let currentPlayer;
+
+   const initGame = (playerOneName = 'Player 1', playerTwoName = 'Player 2') => {
+      players = [
+         {
+            name: playerOneName,
+            token: 'X',
+         },
+         {
+            name: playerTwoName,
+            token: 'O',
+         }
+      ];
+
+      gameboard = Gameboard();
+      board = gameboard.getBoard();
+      currentPlayer = 0;
+
+      console.log("Game has been initialized");
+
+      gameboard.printBoard();
+      alertCurrentPlayerTurn();
+   };
    
    const getCurrentPlayerToken = () => players[currentPlayer].token;
    const getCurrentPlayerName = () => players[currentPlayer].name;
 
    const toggleCurrentPlayer = () => {
       currentPlayer = 1 - currentPlayer;
-      console.log(`${getCurrentPlayerName()} [${getCurrentPlayerToken()}], you're up!`);
+      alertCurrentPlayerTurn();
    };
+   
+   const alertCurrentPlayerTurn = () => {
+      console.log(`${getCurrentPlayerName()} [${getCurrentPlayerToken()}], you're up!`);
+   }
    
    const weGotAWinnerrr = () => {
       console.log(`${getCurrentPlayerName()} is a motha fuckin' winnaaaaaaaaaaaaa`);
@@ -101,7 +115,6 @@ function GameController(
             }
          }
          if (counter >= 3) {
-            weGotAWinnerrr();
             return true;
          }
       }
@@ -115,12 +128,15 @@ function GameController(
       if (targetedCell.getVal() === 0) { // only do voodoo if cell is "empty"
          targetedCell.updateVal(getCurrentPlayerToken());
          gameboard.printBoard();
+
          if (isWinningMove(row, column)) {
-            // TBD
             // Freeze controls?
+            weGotAWinnerrr();
+            initGame();
          } else {
             toggleCurrentPlayer();
          }
+
       } else {
          console.warn('Cell is already occupied'); // this effectively serves as collision management, preventing overwriting previous moves
       }
@@ -128,11 +144,12 @@ function GameController(
 
    return {
       playRound,
+      initGame,
    };
 };
 
-function displayController() {
-   
+function DisplayController() {
+
 }
 
 const game = GameController();
