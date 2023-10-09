@@ -54,6 +54,7 @@ function GameController() {
    let gameboard;
    let board;
    let currentPlayer;
+   let movesMade;
 
    const initGame = (playerOneName = 'Player 1', playerTwoName = 'Player 2') => {
       players = [
@@ -70,6 +71,7 @@ function GameController() {
       gameboard = Gameboard();
       board = gameboard.getBoard();
       currentPlayer = 0;
+      movesMade = 0;
 
       console.log("Game has been initialized");
 
@@ -92,6 +94,10 @@ function GameController() {
    const weGotAWinnerrr = () => {
       console.log(`${getCurrentPlayerName()} is a motha fuckin' winnaaaaaaaaaaaaa`);
    };
+
+   const weGotATie = () => {
+      console.log(`aaand it's a tie`);
+   }
    
    const isWinningMove = (row, column) => {
       const currentPlayerToken = getCurrentPlayerToken();
@@ -121,6 +127,10 @@ function GameController() {
 
       return false
    };
+
+   const isTie = (row, column) => {
+      return (movesMade >= 9) && !isWinningMove(row, column) ? true : false;
+   };
    
    const playRound = (row, column) => {
       const targetedCell = board[row][column];
@@ -128,10 +138,14 @@ function GameController() {
       if (targetedCell.getVal() === 0) { // only do voodoo if cell is "empty"
          targetedCell.updateVal(getCurrentPlayerToken());
          gameboard.printBoard();
+         movesMade++;
 
          if (isWinningMove(row, column)) {
             // Freeze controls?
             weGotAWinnerrr();
+            initGame();
+         } else if (isTie(row, column)) {
+            weGotATie();
             initGame();
          } else {
             toggleCurrentPlayer();
