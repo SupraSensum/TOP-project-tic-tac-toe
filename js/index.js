@@ -1,4 +1,4 @@
-function Gameboard() {
+const Gameboard = (() => {
    const board = []; // shall be 2D
    const rows = 3;
    const columns = 3;
@@ -27,7 +27,7 @@ function Gameboard() {
       getBoard,
       printBoard,
    };
-};
+})();
 
 function Cell(row, column) {
    const address = {
@@ -51,7 +51,6 @@ function Cell(row, column) {
 
 function GameController() {
    let players;
-   let gameboard;
    let board;
    let currentPlayer;
    let movesMade;
@@ -67,15 +66,14 @@ function GameController() {
             token: 'O',
          }
       ];
-
-      gameboard = Gameboard();
-      board = gameboard.getBoard();
+      
+      board = Gameboard.getBoard();
       currentPlayer = 0;
       movesMade = 0;
 
       console.log("Game has been initialized");
 
-      gameboard.printBoard();
+      Gameboard.printBoard();
       alertCurrentPlayerTurn();
    };
    
@@ -137,7 +135,7 @@ function GameController() {
       
       if (targetedCell.getVal() === 0) { // only do voodoo if cell is "empty"
          targetedCell.updateVal(getCurrentPlayerToken());
-         gameboard.printBoard();
+         Gameboard.printBoard();
          movesMade++;
 
          if (isWinningMove(row, column)) {
