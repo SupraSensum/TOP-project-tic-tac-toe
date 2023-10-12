@@ -131,25 +131,30 @@ const Game = (() => {
    const isTie = (row, column) => {
       return (movesMade >= 9) && !isWinningMove(row, column) ? true : false;
    };
+
+   const cellIsEmpty = (cell) => cell.getVal() === 0;
+
+   const processRoundOutcome = (row, column) => {
+      if (isWinningMove(row, column)) {
+         weGotAWinnerrr();
+      } else if (isTie(row, column)) {
+         weGotATie();
+      } else {
+         toggleCurrentPlayer();
+      }
+   };
    
    const playRound = (row, column) => {
       const targetedCell = board[row][column];
       
-      if (targetedCell.getVal() === 0) { // only do voodoo if cell is "empty"
+      if (cellIsEmpty(targetedCell)) {
          targetedCell.updateVal(getCurrentPlayerToken());
          Gameboard.printBoard();
          movesMade++;
 
-         if (isWinningMove(row, column)) {
-            weGotAWinnerrr();
-         } else if (isTie(row, column)) {
-            weGotATie();
-         } else {
-            toggleCurrentPlayer();
-         }
-
+         processRoundOutcome(row, column);
       } else {
-         console.warn('Cell is already occupied'); // this effectively serves as collision management, preventing overwriting previous moves
+         console.warn('Cell is already occupied'); // this effectively serves as collision management, preventing overwriting previous moves, keeping the game state completely unchanged
       }
    };
 
