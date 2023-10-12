@@ -1,3 +1,23 @@
+const Cell = (row, column) => {
+   const address = {
+      row,
+      column,
+   };
+   let value = 0;
+
+   const getAddress = () => address;
+   const getVal = () => value;
+   const updateVal = (newVal) => {
+      value = newVal;
+   }
+
+   return {
+      getAddress,
+      getVal,
+      updateVal,
+   };
+};
+
 const Gameboard = (() => {
    const board = [];
    const rows = 3;
@@ -29,26 +49,6 @@ const Gameboard = (() => {
       printBoard,
    };
 })();
-
-function Cell(row, column) {
-   const address = {
-      row,
-      column,
-   };
-   let value = 0;
-
-   const getAddress = () => address;
-   const getVal = () => value;
-   const updateVal = (newVal) => {
-      value = newVal;
-   }
-
-   return {
-      getAddress,
-      getVal,
-      updateVal,
-   };
-}
 
 const Game = (() => {
    let players;
@@ -164,6 +164,6 @@ const Game = (() => {
    };
 })();
 
-function DisplayController() {
+const DisplayController = (() => {
 
-}
+})();
