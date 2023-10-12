@@ -1,16 +1,16 @@
 const Gameboard = (() => {
-   const board = []; // shall be 2D
+   const board = [];
    const rows = 3;
    const columns = 3;
    
-   const createBoard = (() => { // opted for IIFE for self-documentation
+   const initBoard = () => {
       for (let i = 0; i < rows; i++) {
          board[i] = [];
          for (let j = 0; j < columns; j++) {
             board[i][j] = Cell(i, j);
          }
       }
-   })();
+   };
    
    const getBoard = () => board;
 
@@ -24,6 +24,7 @@ const Gameboard = (() => {
    };
 
    return {
+      initBoard,
       getBoard,
       printBoard,
    };
@@ -67,6 +68,7 @@ const Game = (() => {
          }
       ];
       
+      Gameboard.initBoard();
       board = Gameboard.getBoard();
       currentPlayer = 0;
       movesMade = 0;
@@ -90,7 +92,7 @@ const Game = (() => {
    };
    
    const weGotAWinnerrr = () => {
-      console.log(`${getCurrentPlayerName()} is a motha fuckin' winnaaaaaaaaaaaaa`);
+      console.log(`${getCurrentPlayerName()} is a motha lovin' winnaaa`);
    };
 
    const weGotATie = () => {
@@ -139,12 +141,9 @@ const Game = (() => {
          movesMade++;
 
          if (isWinningMove(row, column)) {
-            // Freeze controls?
             weGotAWinnerrr();
-            initGame();
          } else if (isTie(row, column)) {
             weGotATie();
-            initGame();
          } else {
             toggleCurrentPlayer();
          }
