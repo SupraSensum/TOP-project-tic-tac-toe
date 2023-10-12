@@ -47,9 +47,9 @@ function Cell(row, column) {
       getVal,
       updateVal,
    };
-};
+}
 
-function GameController() {
+const Game = (() => {
    let players;
    let board;
    let currentPlayer;
@@ -87,7 +87,7 @@ function GameController() {
    
    const alertCurrentPlayerTurn = () => {
       console.log(`${getCurrentPlayerName()} [${getCurrentPlayerToken()}], you're up!`);
-   }
+   };
    
    const weGotAWinnerrr = () => {
       console.log(`${getCurrentPlayerName()} is a motha fuckin' winnaaaaaaaaaaaaa`);
@@ -95,7 +95,7 @@ function GameController() {
 
    const weGotATie = () => {
       console.log(`aaand it's a tie`);
-   }
+   };
    
    const isWinningMove = (row, column) => {
       const currentPlayerToken = getCurrentPlayerToken();
@@ -158,10 +158,8 @@ function GameController() {
       playRound,
       initGame,
    };
-};
+})();
 
 function DisplayController() {
 
 }
-
-const game = GameController();
