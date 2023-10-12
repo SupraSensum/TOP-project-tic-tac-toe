@@ -1,3 +1,9 @@
+:root,
+:root::before,
+:root::after {
+   --gameboard-border: 2px solid black;
+}
+
 * {
    box-sizing: border-box;
    margin: 0;
@@ -8,6 +14,7 @@
    display: grid;
    grid-template: repeat(3, 1fr) / repeat(3, 1fr);
    place-items: center;
+   gap: 4px;
 
    width: 80%;
    aspect-ratio: 1 / 1;
@@ -22,13 +29,20 @@
    display: flex;
    align-items: center;
    justify-content: center;
-   border: 2px solid black;
 }
 
-.cell:nth-child(3n) {
-   border-right: none;
+.bd-r {
+   border-right: var(--gameboard-border);
 }
 
-.cell:nth-last-child(-n+3) {
-   border-bottom: none;
+.bd-l {
+   border-left: var(--gameboard-border);
+}
+
+.bd-t {
+   border-top: var(--gameboard-border);
+}
+
+.bd-b {
+   border-bottom: var(--gameboard-border);
 }
