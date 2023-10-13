@@ -168,12 +168,23 @@ const DisplayController = (() => {
    const cells = document.querySelectorAll(".gameboard .cell");
 
    for (const cell of cells) {
-      const row = parseInt(cell.dataset.row);
-      const column = parseInt(cell.dataset.column);
-
-      cell.addEventListener('click', () => {
-         Game.playRound(row, column);
-      });
+      cell.addEventListener('click', (event) => handleCellClick(event));
    }
+   
+   const updateCellDisplay = (cell, row, column) => {
+      const cellVal = Gameboard.getBoard()[row][column].getVal();
+      
+      cell.textContent = cellVal;
+   };
+
+   const handleCellClick = (event) => {
+      const clickedCell = event.target;
+      const clickedCellRow = parseInt(clickedCell.dataset.row);
+      const clickedCellColumn = parseInt(clickedCell.dataset.column);
+
+      Game.playRound(clickedCellRow, clickedCellColumn);
+
+      updateCellDisplay(clickedCell, clickedCellRow, clickedCellColumn);
+   };
 
 })();
