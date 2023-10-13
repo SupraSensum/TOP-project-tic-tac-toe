@@ -165,5 +165,15 @@ const Game = (() => {
 })();
 
 const DisplayController = (() => {
+   const cells = document.querySelectorAll(".gameboard .cell");
+
+   for (const cell of cells) {
+      const row = parseInt(cell.dataset.row);
+      const column = parseInt(cell.dataset.column);
+
+      cell.addEventListener('click', () => {
+         Game.playRound(row, column);
+      });
+   }
 
 })();
