@@ -143,6 +143,11 @@ const Game = (() => {
          toggleCurrentPlayer();
       }
    };
+
+   const handleOccupiedCellWarning = () => {
+      const warningMsg = 'Cell is already occupied';
+      console.warn(warningMsg);
+   };
    
    const playRound = (row, column) => {
       const targetedCell = board[row][column];
@@ -154,7 +159,7 @@ const Game = (() => {
 
          processRoundOutcome(row, column);
       } else {
-         console.warn('Cell is already occupied'); // this effectively serves as collision management, preventing overwriting previous moves, keeping the game state completely unchanged
+         handleOccupiedCellWarning(); // this effectively serves as collision management, preventing overwriting previous moves, keeping the game state completely unchanged
       }
    };
 
