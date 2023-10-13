@@ -144,7 +144,7 @@ const Game = (() => {
       }
    };
 
-   const handleOccupiedCellWarning = () => {
+   const handleOccupiedCell = () => {
       const warningMsg = 'Cell is already occupied';
       console.warn(warningMsg);
    };
@@ -159,7 +159,7 @@ const Game = (() => {
 
          processRoundOutcome(row, column);
       } else {
-         handleOccupiedCellWarning(); // this effectively serves as collision management, preventing overwriting previous moves, keeping the game state completely unchanged
+         handleOccupiedCell(); // this effectively serves as collision management, preventing overwriting previous moves, keeping the game state completely unchanged
       }
    };
 
@@ -171,10 +171,7 @@ const Game = (() => {
 
 const DisplayController = (() => {
    const cells = document.querySelectorAll(".gameboard .cell");
-
-   for (const cell of cells) {
-      cell.addEventListener('click', (event) => handleCellClick(event));
-   }
+   const startButton = document.getElementById('start-button');
    
    const updateCellDisplay = (cell, row, column) => {
       const cellVal = Gameboard.getBoard()[row][column].getVal();
@@ -191,5 +188,19 @@ const DisplayController = (() => {
 
       updateCellDisplay(clickedCell, clickedCellRow, clickedCellColumn);
    };
+
+   const handleStartButton = (event) => {
+      const startButtonContent = event.target.textContent;
+
+      Game.initGame();
+   };
+
+   // Add event listener to each gameboard cell
+   for (const cell of cells) {
+      cell.addEventListener('click', (event) => handleCellClick(event));
+   }
+
+   // Add event listener to 'start button'
+   startButton.addEventListener('click', (event) => handleStartButton(event));
 
 })();
