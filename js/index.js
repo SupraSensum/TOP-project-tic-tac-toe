@@ -299,7 +299,7 @@ const DisplayController = (() => {
       }
    };
 
-   const handleStartButton = (event) => {
+   const toggleStartResetButton = (event) => {
       const startButton = event.target;
       
       if (startButton.value === 'Start') {
@@ -321,6 +321,6 @@ const DisplayController = (() => {
       }
    };
 
-   startButton.addEventListener('click', (event) => handleStartButton(event));
+   startButton.addEventListener('click', (event) => toggleStartResetButton(event));
 
 })();
