@@ -172,6 +172,7 @@ const Game = (() => {
 const DisplayController = (() => {
    const cells = document.querySelectorAll(".gameboard .cell");
    const startButton = document.getElementById('start-button');
+   let playerNames;
 
    const getDisplayCellAddress = (cell) => {
       return {
@@ -200,6 +201,12 @@ const DisplayController = (() => {
          const cellAddress = getDisplayCellAddress(cell);
 
          updateDisplayCell(cell, cellAddress.row, cellAddress.column);
+      }
+   };
+
+   const clearDisplayBoard = () => {
+      for (const cell of cells) {
+         cell.textContent = '';
       }
    };
 
@@ -255,13 +262,13 @@ const DisplayController = (() => {
       const formHTML = `
          <form>
             <div class="input-group">
-               <label for="player1">Player 1 Name:</label>
-               <input type="text" id="player1" name="player1" required minlength="2" maxlength="30" value="Player 1">
+               <label for="player1" style="display: none;">Player 1 Name:</label>
+               <input type="text" id="player1" name="player1" required minlength="2" maxlength="30" placeholder="Player 1">
             </div>
 
             <div class="input-group">
-               <label for="player2">Player 2 Name:</label>
-               <input type="text" id="player2" name="player2" required minlength="2" maxlength="30" value="Player 2">
+               <label for="player2" style="display: none;">Player 2 Name:</label>
+               <input type="text" id="player2" name="player2" required minlength="2" maxlength="30" placeholder="Player 2">
             </div>
          </form>
       `;
@@ -283,22 +290,21 @@ const DisplayController = (() => {
 
    const handleStartButton = (event) => {
       const startButton = event.target;
-
-      if (playersFormIsValid()) {
-         if (startButton.value === 'Start') {
-            const playerNames = getPlayerNames();
-
+      
+      if (startButton.value === 'Start') {
+         if (playersFormIsValid()) {
+            playerNames = getPlayerNames();
+            startButton.value = 'Reset';
             Game.initGame(playerNames.p1, playerNames.p2);
             updateDisplayBoard();
             listenToDisplayCellClicks(true);
             showForm(false);
          }
-
       } else {
-         // Alert user of invalid form
-         //    Right now, the playersFormIsValid() func is handling the alerting,
-         //    but that's not a good separation of duties. Handle it here instead.
-         //    Remember, a func must do ONE thing and ONE thing WELL.
+         startButton.value = 'Start';
+         clearDisplayBoard();
+         listenToDisplayCellClicks(false);
+         showForm(true);
       }
    };
 
