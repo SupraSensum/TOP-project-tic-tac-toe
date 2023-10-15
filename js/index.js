@@ -88,15 +88,24 @@ const Game = (() => {
    };
    
    const alertCurrentPlayerTurn = () => {
-      console.log(`${getCurrentPlayerName()} [${getCurrentPlayerToken()}], you're up!`);
+      const msg = `${getCurrentPlayerName()} [${getCurrentPlayerToken()}], you're up!`;
+
+      console.log(msg);
+      DisplayController.updateDisplayStatus(msg);
    };
    
    const weGotAWinnerrr = () => {
-      console.log(`${getCurrentPlayerName()} is a motha lovin' winnaaa`);
+      const msg = `${getCurrentPlayerName()} is a motha lovin' winnaaa`;
+
+      console.log(msg);
+      DisplayController.updateDisplayStatus(msg);
    };
 
    const weGotATie = () => {
-      console.log(`aaand it's a tie`);
+      const msg = `aaand it's a tie`;
+
+      console.log(msg);
+      DisplayController.updateDisplayStatus(msg);
    };
    
    const isWinningMove = (row, column) => {
@@ -145,8 +154,10 @@ const Game = (() => {
    };
 
    const handleOccupiedCell = () => {
-      const warningMsg = 'Cell is already occupied';
-      console.warn(warningMsg);
+      const msg = 'Cell is already occupied';
+
+      console.warn(msg);
+      alert(msg);
    };
    
    const playRound = (row, column) => {
@@ -172,6 +183,7 @@ const Game = (() => {
 const DisplayController = (() => {
    const cells = document.querySelectorAll(".gameboard .cell");
    const startButton = document.getElementById('start-button');
+   const statusContainer = document.querySelector('.status-container');
    let playerNames;
 
    const getDisplayCellAddress = (cell) => {
@@ -226,7 +238,7 @@ const DisplayController = (() => {
             }
          }
       } else {
-         console.log("Error: Input is not a boolean.");
+         console.error("Error: Input is not a boolean.");
       }
    };
 
@@ -299,6 +311,10 @@ const DisplayController = (() => {
       }
    };
 
+   const updateDisplayStatus = (msg) => {
+      statusContainer.textContent = msg;
+   };
+
    const handleStartButton = (event) => {
       const startButton = event.target;
 
@@ -318,9 +334,13 @@ const DisplayController = (() => {
          clearDisplayBoard();
          listenToDisplayCellClicks(false);
          showForm(true);
+         updateDisplayStatus('Enter player details:');
       }
    };
 
    startButton.addEventListener('click', (event) => handleStartButton(event));
 
+   return {
+      updateDisplayStatus,
+   };
 })();
