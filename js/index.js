@@ -203,9 +203,23 @@ const DisplayController = (() => {
       }
    };
 
-   const beginListeningToCellClicks = () => {
-      for (const cell of cells) {
-         cell.addEventListener('click', (event) => handleCellClick(event));
+   const listenToCellClicks = (isEnabled) => {
+      if (typeof isEnabled === 'boolean') {
+         
+         // Prevent accumulation of duplicate event listeners by removing them
+         //    regardless. No need to check first since this is apparently a
+         //    safe approach.
+         for (const cell of cells) {
+            cell.removeEventListener('click', handleCellClick);
+         }
+
+         if (isEnabled) {
+            for (const cell of cells) {
+               cell.addEventListener('click', handleCellClick);
+            }
+         }
+      } else {
+         console.log("Error: Input is not a boolean.");
       }
    };
 
@@ -235,7 +249,7 @@ const DisplayController = (() => {
    const initGameboardDisplay = () => {
       Game.initGame();
       updateAllCells();
-      beginListeningToCellClicks();
+      listenToCellClicks(true);
    };
 
    const handleStartButton = (event) => {
