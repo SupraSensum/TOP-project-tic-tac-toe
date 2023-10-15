@@ -209,6 +209,29 @@ const DisplayController = (() => {
       }
    };
 
+   const playersFormIsValid = () => {
+      const player1Input = document.getElementById('player1');
+      const player2Input = document.getElementById('player2');
+
+      const player1Value = player1Input.value.trim();
+      const player2Value = player2Input.value.trim();
+
+      const player1Valid = player1Value.length >= 2 && player1Value.length <= 30;
+      const player2Valid = player2Value.length >= 2 && player2Value.length <= 30;
+
+      if (!player1Valid) {
+         alert('Player 1 Name must be between 2 and 30 characters.');
+         return false;
+      }
+
+      if (!player2Valid) {
+         alert('Player 2 Name must be between 2 and 30 characters.');
+         return false;
+      }
+
+      return true;
+   };
+
    const initGameboardDisplay = () => {
       Game.initGame();
       updateAllCells();
@@ -218,11 +241,15 @@ const DisplayController = (() => {
    const handleStartButton = (event) => {
       const startButton = event.target;
 
-      if (startButton.textContent === 'Start') {
-         startButton.textContent = 'Reset';
-      }
+      if (playersFormIsValid()) {
+         if (startButton.value === 'Start') {
+            startButton.value = 'Reset';
+         }
 
-      initGameboardDisplay();
+         initGameboardDisplay();
+      } else {
+
+      }
    };
 
    startButton.addEventListener('click', (event) => handleStartButton(event));
