@@ -261,30 +261,30 @@ const DisplayController = (() => {
    };
 
    const showForm = (isEnabled) => {
-      const inputContainer = document.querySelector('.input-container');
-      const formHTML = `
-         <form>
-            <div class="input-group">
-               <label for="player1" style="display: none;">Player 1 Name:</label>
-               <input type="text" id="player1" name="player1" required minlength="2" maxlength="30" placeholder="Player 1">
-            </div>
+      const formElement = document.querySelector('.input-container form');
+      const additionalFormHTML = `
+         <div class="input-group">
+            <label for="player1" style="display: none;">Player 1 Name:</label>
+            <input type="text" id="player1" name="player1" required minlength="2" maxlength="30" placeholder="Player 1">
+         </div>
 
-            <div class="input-group">
-               <label for="player2" style="display: none;">Player 2 Name:</label>
-               <input type="text" id="player2" name="player2" required minlength="2" maxlength="30" placeholder="Player 2">
-            </div>
-         </form>
+         <div class="input-group">
+            <label for="player2" style="display: none;">Player 2 Name:</label>
+            <input type="text" id="player2" name="player2" required minlength="2" maxlength="30" placeholder="Player 2">
+         </div>
       `;
 
       if (typeof isEnabled === 'boolean') {
-         const currentForm = document.querySelector('.input-container form');
+         const currentForm = document.querySelectorAll('.input-container form .input-group');
 
          if (currentForm) {
-            currentForm.remove();
+            for (const node of currentForm) {
+               node.remove();
+            }
          }
 
          if (isEnabled) {
-            inputContainer.insertAdjacentHTML('afterbegin', formHTML);
+            formElement.insertAdjacentHTML('afterbegin', additionalFormHTML);
 
             if (playerNames) {
                const player1Input = document.getElementById('player1');

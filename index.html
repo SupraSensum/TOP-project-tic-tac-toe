@@ -13,7 +13,7 @@
    </header>
    <main>
       <div class="input-container">
-         <form>
+         <form onsubmit="return false;">
             <div class="input-group">
                <label for="player1" style="display: none;">Player 1 Name:</label>
                <input type="text" id="player1" name="player1" required minlength="2" maxlength="30" placeholder="Player 1">
@@ -23,8 +23,8 @@
                <label for="player2" style="display: none;">Player 2 Name:</label>
                <input type="text" id="player2" name="player2" required minlength="2" maxlength="30" placeholder="Player 2">
             </div>
+            <input type="submit" value="Start" id="start-button">
          </form>
-         <input type="button" value="Start" id="start-button">
       </div>
       <div class="gameboard">
          <div class="cell bd-r bd-b" data-cell="1" data-row="0" data-column="0"></div>
