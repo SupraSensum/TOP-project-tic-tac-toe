@@ -231,8 +231,11 @@ const DisplayController = (() => {
    };
 
    const playersFormIsValid = () => {
-      const player1Value = document.getElementById('player1').value.trim();
-      const player2Value = document.getElementById('player2').value.trim();
+      const player1Input = document.getElementById('player1');
+      const player2Input = document.getElementById('player2');
+
+      const player1Value = player1Input.value.trim();
+      const player2Value = player2Input.value.trim();
 
       const player1Valid = player1Value.length >= 2 && player1Value.length <= 30;
       const player2Valid = player2Value.length >= 2 && player2Value.length <= 30;
@@ -282,6 +285,14 @@ const DisplayController = (() => {
 
          if (isEnabled) {
             inputContainer.insertAdjacentHTML('afterbegin', formHTML);
+
+            if (playerNames) {
+               const player1Input = document.getElementById('player1');
+               const player2Input = document.getElementById('player2');
+
+               player1Input.value = playerNames.p1;
+               player2Input.value = playerNames.p2;
+            }
          }
       } else {
          console.log("Error: Input is not a boolean.");
