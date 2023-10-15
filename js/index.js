@@ -172,35 +172,59 @@ const Game = (() => {
 const DisplayController = (() => {
    const cells = document.querySelectorAll(".gameboard .cell");
    const startButton = document.getElementById('start-button');
+
+   const getCellAddress = (cell) => {
+      return {
+         row: cell.dataset.row,
+         column: cell.dataset.column,
+      };
+   };
    
-   const updateCellDisplay = (cell, row, column) => {
+   const updateCell = (cell, row, column) => {
       const cellVal = Gameboard.getBoard()[row][column].getVal();
       
-      cell.textContent = cellVal;
+      cell.textContent = cellVal === 0 ? '' : cellVal;
    };
 
    const handleCellClick = (event) => {
       const clickedCell = event.target;
-      const clickedCellRow = parseInt(clickedCell.dataset.row);
-      const clickedCellColumn = parseInt(clickedCell.dataset.column);
+      const cellAddress = getCellAddress(clickedCell);
 
-      Game.playRound(clickedCellRow, clickedCellColumn);
+      Game.playRound(cellAddress.row, cellAddress.column);
 
-      updateCellDisplay(clickedCell, clickedCellRow, clickedCellColumn);
+      updateCell(clickedCell, cellAddress.row, cellAddress.column);
+   };
+
+   const updateAllCells = () => {
+      for (const cell of cells) {
+         const cellAddress = getCellAddress(cell);
+
+         updateCell(cell, cellAddress.row, cellAddress.column);
+      }
+   };
+
+   const beginListeningToCellClicks = () => {
+      for (const cell of cells) {
+         cell.addEventListener('click', (event) => handleCellClick(event));
+      }
+   };
+
+   const initGameboardDisplay = () => {
+      Game.initGame();
+      updateAllCells();
+      beginListeningToCellClicks();
    };
 
    const handleStartButton = (event) => {
-      const startButtonContent = event.target.textContent;
+      const startButton = event.target;
 
-      Game.initGame();
+      if (startButton.textContent === 'Start') {
+         startButton.textContent = 'Reset';
+      }
+
+      initGameboardDisplay();
    };
 
-   // Add event listener to each gameboard cell
-   for (const cell of cells) {
-      cell.addEventListener('click', (event) => handleCellClick(event));
-   }
-
-   // Add event listener to 'start button'
    startButton.addEventListener('click', (event) => handleStartButton(event));
 
 })();
