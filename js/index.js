@@ -303,14 +303,16 @@ const DisplayController = (() => {
       const startButton = event.target;
       
       if (startButton.value === 'Start') {
-         if (playersFormIsValid()) {
-            playerNames = getPlayerNames();
-            startButton.value = 'Reset';
-            Game.initGame(playerNames.p1, playerNames.p2);
-            updateDisplayBoard();
-            listenToDisplayCellClicks(true);
-            showForm(false);
+         if (!playersFormIsValid()) {
+            return;
          }
+
+         const playerNames = getPlayerNames();
+         startButton.value = 'Reset';
+         Game.initGame(playerNames.p1, playerNames.p2);
+         updateDisplayBoard();
+         listenToDisplayCellClicks(true);
+         showForm(false);
       } else {
          startButton.value = 'Start';
          clearDisplayBoard();
