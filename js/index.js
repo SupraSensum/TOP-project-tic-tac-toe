@@ -195,7 +195,7 @@ const DisplayController = (() => {
       updateDisplayCell(clickedCell, cellAddress.row, cellAddress.column);
    };
 
-   const updateAllDisplayCells = () => {
+   const updateDisplayBoard = () => {
       for (const cell of cells) {
          const cellAddress = getDisplayCellAddress(cell);
 
@@ -224,11 +224,8 @@ const DisplayController = (() => {
    };
 
    const playersFormIsValid = () => {
-      const player1Input = document.getElementById('player1');
-      const player2Input = document.getElementById('player2');
-
-      const player1Value = player1Input.value.trim();
-      const player2Value = player2Input.value.trim();
+      const player1Value = document.getElementById('player1').value.trim();
+      const player2Value = document.getElementById('player2').value.trim();
 
       const player1Valid = player1Value.length >= 2 && player1Value.length <= 30;
       const player2Valid = player2Value.length >= 2 && player2Value.length <= 30;
@@ -246,10 +243,42 @@ const DisplayController = (() => {
       return true;
    };
 
-   const initDisplay = () => {
-      Game.initGame();
-      updateAllDisplayCells();
-      listenToDisplayCellClicks(true);
+   const getPlayerNames = () => {
+      return {
+         p1: document.getElementById('player1').value.trim(),
+         p2: document.getElementById('player2').value.trim(),
+      };
+   };
+
+   const showForm = (isEnabled) => {
+      const inputContainer = document.querySelector('.input-container');
+      const formHTML = `
+         <form>
+            <div class="input-group">
+               <label for="player1">Player 1 Name:</label>
+               <input type="text" id="player1" name="player1" required minlength="2" maxlength="30" value="Player 1">
+            </div>
+
+            <div class="input-group">
+               <label for="player2">Player 2 Name:</label>
+               <input type="text" id="player2" name="player2" required minlength="2" maxlength="30" value="Player 2">
+            </div>
+         </form>
+      `;
+
+      if (typeof isEnabled === 'boolean') {
+         const currentForm = document.querySelector('.input-container form');
+
+         if (currentForm) {
+            currentForm.remove();
+         }
+
+         if (isEnabled) {
+            inputContainer.insertAdjacentHTML('afterbegin', formHTML);
+         }
+      } else {
+         console.log("Error: Input is not a boolean.");
+      }
    };
 
    const handleStartButton = (event) => {
@@ -257,12 +286,19 @@ const DisplayController = (() => {
 
       if (playersFormIsValid()) {
          if (startButton.value === 'Start') {
-            startButton.value = 'Reset';
+            const playerNames = getPlayerNames();
+
+            Game.initGame(playerNames.p1, playerNames.p2);
+            updateDisplayBoard();
+            listenToDisplayCellClicks(true);
+            showForm(false);
          }
 
-         initDisplay();
       } else {
-
+         // Alert user of invalid form
+         //    Right now, the playersFormIsValid() func is handling the alerting,
+         //    but that's not a good separation of duties. Handle it here instead.
+         //    Remember, a func must do ONE thing and ONE thing WELL.
       }
    };
 
