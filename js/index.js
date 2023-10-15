@@ -173,49 +173,49 @@ const DisplayController = (() => {
    const cells = document.querySelectorAll(".gameboard .cell");
    const startButton = document.getElementById('start-button');
 
-   const getCellAddress = (cell) => {
+   const getDisplayCellAddress = (cell) => {
       return {
          row: cell.dataset.row,
          column: cell.dataset.column,
       };
    };
    
-   const updateCell = (cell, row, column) => {
+   const updateDisplayCell = (cell, row, column) => {
       const cellVal = Gameboard.getBoard()[row][column].getVal();
       
       cell.textContent = cellVal === 0 ? '' : cellVal;
    };
 
-   const handleCellClick = (event) => {
+   const handleDisplayCellClick = (event) => {
       const clickedCell = event.target;
-      const cellAddress = getCellAddress(clickedCell);
+      const cellAddress = getDisplayCellAddress(clickedCell);
 
       Game.playRound(cellAddress.row, cellAddress.column);
 
-      updateCell(clickedCell, cellAddress.row, cellAddress.column);
+      updateDisplayCell(clickedCell, cellAddress.row, cellAddress.column);
    };
 
-   const updateAllCells = () => {
+   const updateAllDisplayCells = () => {
       for (const cell of cells) {
-         const cellAddress = getCellAddress(cell);
+         const cellAddress = getDisplayCellAddress(cell);
 
-         updateCell(cell, cellAddress.row, cellAddress.column);
+         updateDisplayCell(cell, cellAddress.row, cellAddress.column);
       }
    };
 
-   const listenToCellClicks = (isEnabled) => {
+   const listenToDisplayCellClicks = (isEnabled) => {
       if (typeof isEnabled === 'boolean') {
          
          // Prevent accumulation of duplicate event listeners by removing them
          //    regardless. No need to check first since this is apparently a
          //    safe approach.
          for (const cell of cells) {
-            cell.removeEventListener('click', handleCellClick);
+            cell.removeEventListener('click', handleDisplayCellClick);
          }
 
          if (isEnabled) {
             for (const cell of cells) {
-               cell.addEventListener('click', handleCellClick);
+               cell.addEventListener('click', handleDisplayCellClick);
             }
          }
       } else {
@@ -246,10 +246,10 @@ const DisplayController = (() => {
       return true;
    };
 
-   const initGameboardDisplay = () => {
+   const initDisplay = () => {
       Game.initGame();
-      updateAllCells();
-      listenToCellClicks(true);
+      updateAllDisplayCells();
+      listenToDisplayCellClicks(true);
    };
 
    const handleStartButton = (event) => {
@@ -260,7 +260,7 @@ const DisplayController = (() => {
             startButton.value = 'Reset';
          }
 
-         initGameboardDisplay();
+         initDisplay();
       } else {
 
       }
