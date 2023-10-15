@@ -299,15 +299,15 @@ const DisplayController = (() => {
       }
    };
 
-   const toggleStartResetButton = (event) => {
+   const handleStartButton = (event) => {
       const startButton = event.target;
-      
+
       if (startButton.value === 'Start') {
          if (!playersFormIsValid()) {
             return;
          }
 
-         const playerNames = getPlayerNames();
+         playerNames = getPlayerNames();
          startButton.value = 'Reset';
          Game.initGame(playerNames.p1, playerNames.p2);
          updateDisplayBoard();
@@ -321,6 +321,6 @@ const DisplayController = (() => {
       }
    };
 
-   startButton.addEventListener('click', (event) => toggleStartResetButton(event));
+   startButton.addEventListener('click', (event) => handleStartButton(event));
 
 })();
