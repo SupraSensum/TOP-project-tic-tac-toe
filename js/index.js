@@ -99,6 +99,7 @@ const Game = (() => {
 
       console.log(msg);
       DisplayController.updateDisplayStatus(msg);
+      DisplayController.handleGameOver();
    };
 
    const weGotATie = () => {
@@ -106,6 +107,7 @@ const Game = (() => {
 
       console.log(msg);
       DisplayController.updateDisplayStatus(msg);
+      DisplayController.handleGameOver();
    };
    
    const isWinningMove = (row, column) => {
@@ -315,6 +317,10 @@ const DisplayController = (() => {
       statusContainer.textContent = msg;
    };
 
+   const handleGameOver = () => {
+      listenToDisplayCellClicks(false);
+   };
+
    const handleStartButton = (event) => {
       const startButton = event.target;
 
@@ -342,5 +348,6 @@ const DisplayController = (() => {
 
    return {
       updateDisplayStatus,
+      handleGameOver,
    };
 })();
