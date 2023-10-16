@@ -122,3 +122,19 @@ form {
 .bd-b {
    border-bottom: var(--gameboard-border);
 }
+
+@keyframes flash {0%,
+   50%,
+   100% {
+      background-color: transparent;
+   }
+
+   25%,
+   75% {
+      background-color: rgb(214, 0, 0);
+   }
+}
+
+.flash {
+   animation: flash 1s infinite;
+}

@@ -88,7 +88,7 @@ const Game = (() => {
    };
    
    const alertCurrentPlayerTurn = () => {
-      const msg = `${getCurrentPlayerName()} [${getCurrentPlayerToken()}], you're up!`;
+      const msg = `${getCurrentPlayerName()} (${getCurrentPlayerToken()}), you're up!`;
 
       console.log(msg);
       DisplayController.updateDisplayStatus(msg);
@@ -155,11 +155,22 @@ const Game = (() => {
       }
    };
 
-   const handleOccupiedCell = () => {
+   const flashOccupiedCell = (row, column) => {
+      const targetedCell = document.querySelector(`[data-row="${row}"][data-column="${column}"]`);
+
+      targetedCell.classList.add('flash');
+
+      setTimeout(() => {
+         targetedCell.classList.remove('flash');
+      }, 1000);
+   };
+
+   const handleOccupiedCell = (row, column) => {
       const msg = 'Cell is already occupied';
 
       console.warn(msg);
-      alert(msg);
+
+      flashOccupiedCell(row, column);
    };
    
    const playRound = (row, column) => {
@@ -172,7 +183,7 @@ const Game = (() => {
 
          processRoundOutcome(row, column);
       } else {
-         handleOccupiedCell(); // this effectively serves as collision management, preventing overwriting previous moves, keeping the game state completely unchanged
+         handleOccupiedCell(row, column); // this effectively serves as collision management, preventing overwriting previous moves, keeping the game state completely unchanged
       }
    };
 
