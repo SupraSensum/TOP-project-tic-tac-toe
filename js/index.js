@@ -273,7 +273,7 @@ const DisplayController = (() => {
    };
 
    const showForm = (isEnabled) => {
-      const formElement = document.querySelector('.input-container form');
+      const formElement = document.querySelector('form');
       const additionalFormHTML = `
          <div class="input-group">
             <label for="player1" style="display: none;">Player 1 Name:</label>
@@ -287,7 +287,7 @@ const DisplayController = (() => {
       `;
 
       if (typeof isEnabled === 'boolean') {
-         const currentForm = document.querySelectorAll('.input-container form .input-group');
+         const currentForm = document.querySelectorAll('form .input-group');
 
          if (currentForm) {
             for (const node of currentForm) {
